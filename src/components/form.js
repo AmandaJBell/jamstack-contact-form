@@ -41,13 +41,19 @@ const Form = () => {
       method: "POST",
       body: JSON.stringify(state),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("Something went wrong.");
+        }
+      })
       .then((response) => {
         console.log(response);
         setStatus("SUCCESS");
       })
       .catch((error) => {
-        console.error(error);
+        console.error("ERROR", error);
         setStatus("ERROR");
       });
   };
